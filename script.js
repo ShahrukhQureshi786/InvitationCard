@@ -8,15 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicToggle = document.getElementById('musicToggle');
 
     // CONFIGURATION: Audio Timings (in seconds) & Volume
-    const startTime = 14;  // 1:00 minute se start hoga
-    const duration = 15;   // 15 seconds tak chalega
-    const endTime = startTime + duration; // 75 seconds par loop back hoga
-    const softVolume = 0.3; // 30% volume (Meetha aur low volume background score ke liye)
+    const startTime = 14;  
+    const duration = 15;   
+    const endTime = startTime + duration; 
+    const softVolume = 0.3; 
 
     waxSeal.addEventListener('click', () => {
         openingScreen.classList.add('slide-out');
         
-        // Music Trigger: Seal break hote hi targeted soft play shuru ho
+        // Music Trigger
         playAudio();
 
         // Smooth entry sync delay for invitation card animation
@@ -27,15 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Music button floating smooth entry
             musicToggle.classList.add('visible');
             
+            // Canvas Engine initiation after layout calculation stabilizes
             initScratchCard();
         }, 800); 
     });
 
-    // Audio Play Control Helper with exact custom timing and soft volume setup
+    // Audio Play Control Helper
     function playAudio() {
-        // Song ka volume halka aur meetha set karna
         bgMusic.volume = softVolume;
-        // Song ko 1:00 mint par set karna
         bgMusic.currentTime = startTime;
 
         bgMusic.play().then(() => {
@@ -46,16 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 10-20 sec ke loop ko control karne wala function (Continuous Monitoring)
+    // Audio looping monitor
     bgMusic.addEventListener('timeupdate', () => {
-        // Volume check to ensure it stays soft (just in case browser resets it)
         if (bgMusic.volume !== softVolume) {
             bgMusic.volume = softVolume;
         }
         
-        // Agar gaana chaltay huay hamare set kiye huay endTime (75s) par pahuche
         if (bgMusic.currentTime >= endTime) {
-            bgMusic.currentTime = startTime; // Dobara 1:00 minute par bhej do
+            bgMusic.currentTime = startTime; 
             bgMusic.play(); 
         }
     });
@@ -78,6 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 2. SMOOTH LINE DRAWING SCRATCH ENGINE ---
+    let canvasResizeTimeout;
+    
     function initScratchCard() {
         const canvas = document.getElementById('scratchCanvas');
         if (!canvas) return;
@@ -85,14 +84,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = canvas.getContext('2d');
         const wrapper = canvas.parentElement;
         
+        // Setup initial responsive size
         canvas.width = wrapper.clientWidth;
         canvas.height = wrapper.clientHeight;
 
-        // Warm Matte Purple-Bronze Texture Background
+        // Draw Premium Matched Canvas Cover
         ctx.fillStyle = '#26222e';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Premium Gold Sparkles Over Overlay
+        // Premium Gold Sparkles
         ctx.fillStyle = 'rgba(212, 175, 55, 0.75)';
         for (let i = 0; i < 350; i++) {
             let x = Math.random() * canvas.width;
@@ -100,8 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillRect(x, y, 1.8, 1.8);
         }
 
-        // Texture Helper Instruction Text
-        ctx.font = "italic 16px 'Cormorant Garamond'";
+        // Adaptive font sizing for mobile screen text wrapping space inside canvas
+        let textFontSize = canvas.width < 500 ? "italic 15px 'Cormorant Garamond'" : "italic 18px 'Cormorant Garamond'";
+        ctx.font = textFontSize;
         ctx.fillStyle = "#d4af37";
         ctx.textAlign = "center";
         ctx.fillText("Scratch Card to Reveal Royal Details", canvas.width / 2, canvas.height / 2);
@@ -128,7 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.globalCompositeOperation = 'destination-out';
             ctx.lineJoin = 'round';
             ctx.lineCap = 'round';
-            ctx.lineWidth = 70; 
+            // Custom responsive brush size for mobile vs desktop
+            ctx.lineWidth = canvas.width < 500 ? 55 : 75; 
 
             ctx.beginPath();
             ctx.moveTo(lastPos.x, lastPos.y);
@@ -149,7 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             let percentage = (cleared / (pixels.length / 4)) * 100;
-            if (percentage > 45) {
+            // Lowered threshold limit for immediate dynamic sweep clean on mobile
+            if (percentage > 35) {
                 canvas.style.opacity = '0';
                 setTimeout(() => {
                     canvas.remove();
@@ -157,29 +160,46 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Desktop Interface
+        // Event Listeners for Scratch
         canvas.addEventListener('mousedown', (e) => { 
             isDrawing = true; 
             lastPos = getMousePos(e); 
             ctx.globalCompositeOperation = 'destination-out';
             ctx.beginPath();
-            ctx.arc(lastPos.x, lastPos.y, 35, 0, Math.PI * 2);
+            ctx.arc(lastPos.x, lastPos.y, canvas.width < 500 ? 28 : 38, 0, Math.PI * 2);
             ctx.fill();
         });
         canvas.addEventListener('mousemove', scratchMove);
         window.addEventListener('mouseup', () => isDrawing = false);
 
-        // Mobile Interface
         canvas.addEventListener('touchstart', (e) => { 
             isDrawing = true; 
             lastPos = getMousePos(e); 
             ctx.globalCompositeOperation = 'destination-out';
             ctx.beginPath();
-            ctx.arc(lastPos.x, lastPos.y, 35, 0, Math.PI * 2);
+            ctx.arc(lastPos.x, lastPos.y, canvas.width < 500 ? 28 : 38, 0, Math.PI * 2);
             ctx.fill();
         });
         canvas.addEventListener('touchmove', scratchMove);
         window.addEventListener('touchend', () => isDrawing = false);
+
+        // Handle structural rotation or scaling shifts on mobile devices safely
+        window.addEventListener('resize', () => {
+            clearTimeout(canvasResizeTimeout);
+            canvasResizeTimeout = setTimeout(() => {
+                if (document.getElementById('scratchCanvas')) {
+                    canvas.width = wrapper.clientWidth;
+                    canvas.height = wrapper.clientHeight;
+                    // re-fill canvas to prevent broken overlay masks
+                    ctx.fillStyle = '#26222e';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.font = textFontSize;
+                    ctx.fillStyle = "#d4af37";
+                    ctx.textAlign = "center";
+                    ctx.fillText("Scratch Card to Reveal Royal Details", canvas.width / 2, canvas.height / 2);
+                }
+            }, 200);
+        });
     }
 
     // --- 3. COUNTDOWN AND AUTOMATIC VIEW SYNC SCROLL ENGINE ---
@@ -223,7 +243,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. LIGHTWEIGHT LUXURY PARTICLES ENGINE ---
     const pContainer = document.getElementById('particles');
-    for (let i = 0; i < 40; i++) {
+    // Limited maximum count for smooth performance render on low end mobile hardware
+    const maxParticles = window.innerWidth < 768 ? 20 : 40;
+    
+    for (let i = 0; i < maxParticles; i++) {
         const p = document.createElement('div');
         p.className = 'particle p-gold';
         p.style.left = Math.random() * 100 + 'vw';
