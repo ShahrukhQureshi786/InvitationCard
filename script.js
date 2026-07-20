@@ -1,19 +1,80 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. ENVELOPE OPENING LOGIC & CARD ANIMATION SYNC ---
+    // --- 1. ENVELOPE OPENING, AUDIO PLAY & CARD ANIMATION SYNC ---
     const waxSeal = document.getElementById('waxSeal');
     const openingScreen = document.getElementById('openingScreen');
     const invitationSection = document.getElementById('invitationSection');
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+
+    // CONFIGURATION: Audio Timings (in seconds) & Volume
+    const startTime = 14;  // 1:00 minute se start hoga
+    const duration = 15;   // 15 seconds tak chalega
+    const endTime = startTime + duration; // 75 seconds par loop back hoga
+    const softVolume = 0.3; // 30% volume (Meetha aur low volume background score ke liye)
 
     waxSeal.addEventListener('click', () => {
         openingScreen.classList.add('slide-out');
         
-        // Timeout ko balance kia hai takay ribbon open honay k sath smooth fade-in entry ho
+        // Music Trigger: Seal break hote hi targeted soft play shuru ho
+        playAudio();
+
+        // Smooth entry sync delay for invitation card animation
         setTimeout(() => {
             openingScreen.style.display = 'none';
             invitationSection.classList.add('active-view');
+            
+            // Music button floating smooth entry
+            musicToggle.classList.add('visible');
+            
             initScratchCard();
         }, 800); 
+    });
+
+    // Audio Play Control Helper with exact custom timing and soft volume setup
+    function playAudio() {
+        // Song ka volume halka aur meetha set karna
+        bgMusic.volume = softVolume;
+        // Song ko 1:00 mint par set karna
+        bgMusic.currentTime = startTime;
+
+        bgMusic.play().then(() => {
+            musicToggle.classList.add('playing');
+            musicToggle.innerHTML = '<span class="music-icon">⏸️</span>';
+        }).catch((err) => {
+            console.log("Browser blocked automatic autoplay until further interaction:", err);
+        });
+    }
+
+    // 10-20 sec ke loop ko control karne wala function (Continuous Monitoring)
+    bgMusic.addEventListener('timeupdate', () => {
+        // Volume check to ensure it stays soft (just in case browser resets it)
+        if (bgMusic.volume !== softVolume) {
+            bgMusic.volume = softVolume;
+        }
+        
+        // Agar gaana chaltay huay hamare set kiye huay endTime (75s) par pahuche
+        if (bgMusic.currentTime >= endTime) {
+            bgMusic.currentTime = startTime; // Dobara 1:00 minute par bhej do
+            bgMusic.play(); 
+        }
+    });
+
+    // Manual Play/Stop Button Action
+    musicToggle.addEventListener('click', () => {
+        if (bgMusic.paused) {
+            bgMusic.volume = softVolume;
+            if (bgMusic.currentTime < startTime || bgMusic.currentTime > endTime) {
+                bgMusic.currentTime = startTime;
+            }
+            bgMusic.play();
+            musicToggle.classList.add('playing');
+            musicToggle.innerHTML = '<span class="music-icon">⏸️</span>';
+        } else {
+            bgMusic.pause();
+            musicToggle.classList.remove('playing');
+            musicToggle.innerHTML = '<span class="music-icon">🎵</span>';
+        }
     });
 
     // --- 2. SMOOTH LINE DRAWING SCRATCH ENGINE ---
@@ -58,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
 
-        // Continuous path calculation (Smooth vector scratch lines)
         function scratchMove(e) {
             if (!isDrawing) return;
             e.preventDefault();
@@ -68,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.globalCompositeOperation = 'destination-out';
             ctx.lineJoin = 'round';
             ctx.lineCap = 'round';
-            ctx.lineWidth = 70; // High thickness stroke for faster reveal
+            ctx.lineWidth = 70; 
 
             ctx.beginPath();
             ctx.moveTo(lastPos.x, lastPos.y);
@@ -97,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Desktop Pointer Interface Hooks
+        // Desktop Interface
         canvas.addEventListener('mousedown', (e) => { 
             isDrawing = true; 
             lastPos = getMousePos(e); 
@@ -109,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.addEventListener('mousemove', scratchMove);
         window.addEventListener('mouseup', () => isDrawing = false);
 
-        // Mobile Touch Interface Hooks
+        // Mobile Interface
         canvas.addEventListener('touchstart', (e) => { 
             isDrawing = true; 
             lastPos = getMousePos(e); 
@@ -128,23 +188,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const finalSection = document.getElementById('finalSection');
 
     continueBtn.addEventListener('click', () => {
-        // Dono layers ko rendering active flex stack karein
         countdownSection.classList.remove('hidden-initially');
         finalSection.classList.remove('hidden-initially');
         
-        // Dynamic layout calculation delay adjustment
         setTimeout(() => {
             countdownSection.style.opacity = '1';
             countdownSection.style.transform = 'translateY(0)';
             finalSection.style.opacity = '1';
             finalSection.style.transform = 'translateY(0)';
             
-            // Seamless smooth automatic scrolling synchronization
             countdownSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
     });
 
-    // Countdown Clock Math Logic
+    // Countdown Clock Logic
     function updateClock() {
         const weddingDate = new Date('October 24, 2026 17:00:00').getTime();
         const now = new Date().getTime();
