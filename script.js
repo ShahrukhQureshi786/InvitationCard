@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Countdown Clock Logic
     function updateClock() {
-        const weddingDate = new Date('October 24, 2026 17:00:00').getTime();
+        const weddingDate = new Date('November 06, 2026 18:00:00').getTime();
         const now = new Date().getTime();
         const diff = weddingDate - now;
 
