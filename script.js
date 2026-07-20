@@ -94,18 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Premium Gold Sparkles
         ctx.fillStyle = 'rgba(212, 175, 55, 0.75)';
-        for (let i = 0; i < 350; i++) {
+        for (let i = 0; i < 450; i++) {
             let x = Math.random() * canvas.width;
             let y = Math.random() * canvas.height;
             ctx.fillRect(x, y, 1.8, 1.8);
         }
 
-        // Adaptive font sizing for mobile screen text wrapping space inside canvas
-        let textFontSize = canvas.width < 500 ? "italic 15px 'Cormorant Garamond'" : "italic 18px 'Cormorant Garamond'";
+        // Adaptive font sizing for canvas prompt message
+        let textFontSize = canvas.width < 500 ? "italic 16px 'Cormorant Garamond'" : "italic 20px 'Cormorant Garamond'";
         ctx.font = textFontSize;
         ctx.fillStyle = "#d4af37";
         ctx.textAlign = "center";
-        ctx.fillText("Scratch Card to Reveal Royal Details", canvas.width / 2, canvas.height / 2);
+        ctx.fillText("Scratch Carefully to Reveal the Blessed Details", canvas.width / 2, canvas.height / 2);
 
         let isDrawing = false;
         let lastPos = { x: 0, y: 0 }; 
@@ -129,8 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.globalCompositeOperation = 'destination-out';
             ctx.lineJoin = 'round';
             ctx.lineCap = 'round';
-            // Custom responsive brush size for mobile vs desktop
-            ctx.lineWidth = canvas.width < 500 ? 55 : 75; 
+            ctx.lineWidth = canvas.width < 500 ? 60 : 80; 
 
             ctx.beginPath();
             ctx.moveTo(lastPos.x, lastPos.y);
@@ -151,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             let percentage = (cleared / (pixels.length / 4)) * 100;
-            // Lowered threshold limit for immediate dynamic sweep clean on mobile
+            // Immediate structural sweep reveal once 35% threshold achieved
             if (percentage > 35) {
                 canvas.style.opacity = '0';
                 setTimeout(() => {
@@ -166,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             lastPos = getMousePos(e); 
             ctx.globalCompositeOperation = 'destination-out';
             ctx.beginPath();
-            ctx.arc(lastPos.x, lastPos.y, canvas.width < 500 ? 28 : 38, 0, Math.PI * 2);
+            ctx.arc(lastPos.x, lastPos.y, canvas.width < 500 ? 30 : 40, 0, Math.PI * 2);
             ctx.fill();
         });
         canvas.addEventListener('mousemove', scratchMove);
@@ -177,26 +176,25 @@ document.addEventListener('DOMContentLoaded', () => {
             lastPos = getMousePos(e); 
             ctx.globalCompositeOperation = 'destination-out';
             ctx.beginPath();
-            ctx.arc(lastPos.x, lastPos.y, canvas.width < 500 ? 28 : 38, 0, Math.PI * 2);
+            ctx.arc(lastPos.x, lastPos.y, canvas.width < 500 ? 30 : 40, 0, Math.PI * 2);
             ctx.fill();
         });
         canvas.addEventListener('touchmove', scratchMove);
         window.addEventListener('touchend', () => isDrawing = false);
 
-        // Handle structural rotation or scaling shifts on mobile devices safely
+        // Handle structural orientation flips or window resize events safely
         window.addEventListener('resize', () => {
             clearTimeout(canvasResizeTimeout);
             canvasResizeTimeout = setTimeout(() => {
                 if (document.getElementById('scratchCanvas')) {
                     canvas.width = wrapper.clientWidth;
                     canvas.height = wrapper.clientHeight;
-                    // re-fill canvas to prevent broken overlay masks
                     ctx.fillStyle = '#26222e';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                     ctx.font = textFontSize;
                     ctx.fillStyle = "#d4af37";
                     ctx.textAlign = "center";
-                    ctx.fillText("Scratch Card to Reveal Royal Details", canvas.width / 2, canvas.height / 2);
+                    ctx.fillText("Scratch Carefully to Reveal the Blessed Details", canvas.width / 2, canvas.height / 2);
                 }
             }, 200);
         });
@@ -243,7 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. LIGHTWEIGHT LUXURY PARTICLES ENGINE ---
     const pContainer = document.getElementById('particles');
-    // Limited maximum count for smooth performance render on low end mobile hardware
     const maxParticles = window.innerWidth < 768 ? 20 : 40;
     
     for (let i = 0; i < maxParticles; i++) {
