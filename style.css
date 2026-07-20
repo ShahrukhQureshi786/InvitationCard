@@ -250,7 +250,7 @@ body {
 .scratch-container-wrapper {
     position: relative;
     width: 100%;
-    min-height: 480px;
+    min-height: 560px; /* Increased to compensate for beautiful long text height elegantly */
     border-radius: 16px;
     overflow: hidden;
 }
@@ -277,11 +277,22 @@ body {
     -webkit-user-select: none;
 }
 
+/* Mash'Allah Top Title Styling */
+.top-blessing {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: #d4af37;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
 .card-top-decoration { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #d4af37, transparent); margin: 0 auto 20px; }
-.invite-label { letter-spacing: 6px; font-size: 0.75rem; color: #d4af37; font-weight: 500; margin-bottom: 15px; }
+.invite-label { letter-spacing: 6px; font-size: 0.75rem; color: #a49fae; font-weight: 500; margin-bottom: 15px; }
 
 .couple-names {
-    font-size: 4.5rem;
+    font-size: 3rem;
     line-height: 1.2;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
@@ -295,7 +306,7 @@ body {
 
 .couple-names .ampersand {
     display: block;
-    font-size: 2.8rem;
+    font-size: 2.5rem;
     color: #d4af37 !important;
     margin: 5px 0;
     font-family: 'Cormorant Garamond', serif;
@@ -304,7 +315,28 @@ body {
 .divider { width: 160px; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent); margin: 25px auto; position: relative; }
 .divider-diamond { position: absolute; top: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 9px; height: 9px; background: #d4af37; }
 
-.invitation-text { max-width: 550px; margin: 0 auto 35px; font-size: 1.15rem; font-family: 'Cormorant Garamond', serif; font-style: italic; color: rgba(255, 255, 255, 0.9); line-height: 1.7; }
+/* Elegant Prayer Text Box Styling */
+.blessed-prayer-block {
+    max-width: 620px;
+    margin: 0 auto 35px;
+    padding: 0 10px;
+}
+
+.bismillah-text {
+    font-size: 1.1rem;
+    color: #d4af37;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.invitation-text { 
+    font-size: 1.2rem; 
+    font-family: 'Cormorant Garamond', serif; 
+    color: rgba(255, 255, 255, 0.95); 
+    line-height: 1.7; 
+}
 
 /* Grid / Stack Layout management for Events */
 .events-container-block { 
@@ -405,13 +437,16 @@ body {
     .seal-monogram { font-size: 1.8rem; }
     
     .invitation-card { padding: 35px 15px; }
-    .scratch-container-wrapper { min-height: 450px; }
+    .scratch-container-wrapper { min-height: 590px; }
     
+    .top-blessing { font-size: 2rem; }
     .couple-names { font-size: 2.6rem; margin-bottom: 5px; }
     .couple-names .ampersand { font-size: 2rem; margin: 2px 0; }
-    .invitation-text { font-size: 1.05rem; margin-bottom: 25px; padding: 0 5px; }
     
-    /* Event details break beautifully to 2 cols on mobile for compact space */
+    .bismillah-text { font-size: 1rem; margin-bottom: 8px; }
+    .invitation-text { font-size: 1.05rem; padding: 0 5px; }
+    
+    /* Event details break beautifully to 1 col on mobile for compact space */
     .event-details { grid-template-columns: 1fr; gap: 8px; }
     .detail-box { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; text-align: left; }
     .detail-box h4 { margin-bottom: 0; font-size: 0.75rem; }
@@ -429,4 +464,5 @@ body {
 
 @media (max-width: 380px) {
     .couple-names { font-size: 2.2rem; }
+    .scratch-container-wrapper { min-height: 640px; }
 }
