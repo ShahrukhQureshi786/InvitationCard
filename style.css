@@ -29,7 +29,7 @@ body {
     position: fixed;
     border-radius: 50%;
     filter: blur(140px);
-    opacity: 0.22; /* Halka sa glow badhaya hai to add tone colors */
+    opacity: 0.22;
     pointer-events: none;
     z-index: 0;
 }
@@ -37,6 +37,58 @@ body {
 .glow-1 { width: 600px; height: 600px; background: radial-gradient(#6d44eb, transparent); top: -200px; left: -150px; }
 .glow-2 { width: 500px; height: 500px; background: radial-gradient(#00bfff, transparent); right: -100px; top: 20%; }
 .glow-3 { width: 450px; height: 450px; background: radial-gradient(#ff0077, transparent); bottom: -100px; left: 35%; }
+
+/* ==========================================
+   ELEGANT FLOATING MUSIC CONTROL BUTTON
+   ========================================== */
+.music-control-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(29, 25, 36, 0.9) 0%, rgba(18, 15, 22, 0.95) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #d4af37;
+    cursor: pointer;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s cubic-bezier(0.215, 0.610, 0.355, 1);
+    pointer-events: none;
+}
+
+.music-control-btn.visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.music-control-btn:hover {
+    transform: scale(1.1);
+    border-color: #ffffff;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.music-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.music-control-btn.playing .music-icon {
+    animation: musicPulse 1.5s infinite linear;
+}
+
+@keyframes musicPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
 
 /* ==========================================
    THEMED ENVELOPE OPENING & WAX SEAL
@@ -150,12 +202,11 @@ body {
     opacity: 0;
     position: relative;
     z-index: 2;
-    transform: translateY(40px); /* Initial position for entry animation */
+    transform: translateY(40px);
     transition: opacity 1.2s cubic-bezier(0.215, 0.610, 0.355, 1), 
                 transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1);
 }
 
-/* Jab reveal trigger ho tab smooth upward entry animation chalegi */
 .invitation-section.active-view {
     display: flex !important;
     opacity: 1;
@@ -167,7 +218,7 @@ body {
     max-width: 95%;
     padding: 60px 40px;
     border-radius: 30px;
-    background: linear-gradient(135deg, rgba(29, 25, 36, 0.92) 0%, rgba(18, 15, 22, 0.98) 100%); /* Premium Rich Plum Tone instead of absolute black */
+    background: linear-gradient(135deg, rgba(29, 25, 36, 0.92) 0%, rgba(18, 15, 22, 0.98) 100%);
     border: 1px solid rgba(212, 175, 55, 0.25);
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), 0 0 40px rgba(110, 68, 235, 0.05);
     backdrop-filter: blur(25px);
