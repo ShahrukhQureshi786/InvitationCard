@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Wedding Invitation</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Ambient Background Lighting -->
+    <div class="background-glow glow-1"></div>
+    <div class="background-glow glow-2"></div>
+    <div class="background-glow glow-3"></div>
+    <div id="particles"></div>
+
+    <!-- 1. Opening Screen / Wax Seal Envelope -->
+    <div class="opening-screen" id="openingScreen">
+        <div class="ribbon-half ribbon-left">
+            <div class="royal-pattern-overlay"></div>
+        </div>
+        <div class="ribbon-half ribbon-right">
+            <div class="royal-pattern-overlay"></div>
+        </div>
+        
+        <div class="seal-container">
+            <div class="luxury-seal-wrapper">
+                <div class="seal-pulse"></div>
+                <div class="seal-pulse delay-pulse"></div>
+                <div class="luxury-seal" id="waxSeal">
+                    <div class="seal-inner">
+                        <span class="seal-monogram">E&A</span>
+                    </div>
+                </div>
+            </div>
+            <h2 class="seal-title">The Wedding</h2>
+            <div class="seal-crest-line"></div>
+            <p class="seal-subtitle">Save The Date</p>
+        </div>
+    </div>
+
+    <!-- 2. Main Invitation Section (With Scratch Card) -->
+    <div class="invitation-section" id="invitationSection">
+        <div class="invitation-card">
+            <!-- Corner Accents -->
+            <div class="corner-accent top-left"></div>
+            <div class="corner-accent top-right"></div>
+            <div class="corner-accent bottom-left"></div>
+            <div class="corner-accent bottom-right"></div>
+
+            <!-- The Master Scratch Wrapper -->
+            <div class="scratch-container-wrapper">
+                
+                <!-- The Canvas Parda (Sits perfectly on top) -->
+                <canvas id="scratchCanvas" class="scratch-canvas-overlay"></canvas>
+                
+                <!-- Hidden Content (Reveals dynamically as you scratch) -->
+                <div class="revealed-content-underneath">
+                    <div class="card-top-decoration"></div>
+                    <p class="invite-label">WE ARE GETTING MARRIED</p>
+                    
+                    <h1 class="couple-names">
+                        Emma 
+                        <span class="ampersand">&</span> 
+                        Alexander
+                    </h1>
+
+                    <div class="divider">
+                        <div class="divider-diamond"></div>
+                    </div>
+
+                    <p class="invitation-text">
+                        Together with their families, they invite you to celebrate their love, laughter, and happily ever after.
+                    </p>
+
+                    <!-- Events Grid -->
+                    <div class="events-master-wrapper">
+                        <div class="event-block">
+                            <h3 class="event-title">Wedding Ceremony</h3>
+                            <div class="event-details">
+                                <div class="detail-box">
+                                    <h4>Date</h4>
+                                    <p>October 24, 2026</p>
+                                </div>
+                                <div class="detail-box">
+                                    <h4>Time</h4>
+                                    <p>05:00 PM</p>
+                                </div>
+                                <div class="detail-box">
+                                    <h4>Venue</h4>
+                                    <p>The Grand Palace</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Next Button -->
+                    <div class="btn-container">
+                        <button class="continue-btn" id="continueBtn">View Countdown</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Countdown Section -->
+    <div class="countdown-section hidden-initially" id="countdownSection">
+        <div class="countdown-box">
+            <h2 class="section-gold-heading">Days to Go</h2>
+            <div class="heading-sub-accent"></div>
+            <div class="countdown-grid">
+                <div class="time-box"><span id="days">00</span><small>Days</small></div>
+                <div class="time-box"><span id="hours">00</span><small>Hours</small></div>
+                <div class="time-box"><span id="minutes">00</span><small>Minutes</small></div>
+                <div class="time-box"><span id="seconds">00</span><small>Seconds</small></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Final Section -->
+    <div class="final-section hidden-initially" id="finalSection">
+        <div class="final-content">
+            <div class="royal-crest-icon">✦</div>
+            <h2>Thank You</h2>
+            <p class="final-message">We look forward to celebrating with you.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
