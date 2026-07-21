@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Invitation</title>
     
-    <!-- Beautiful Golden Rings Favicon for Browser Tab -->
+    <!-- Golden Rings Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
 
     <!-- Fonts -->
@@ -19,33 +19,35 @@
         <source src="music/gh.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Elegant Music Control Toggle Button -->
+    <!-- Music Control Button -->
     <button id="musicToggle" class="music-control-btn" aria-label="Toggle Music">
         <span class="music-icon">🎵</span>
     </button>
 
-    <!-- Ambient Background Lighting -->
+    <!-- Ambient Background Lighting & Particles -->
     <div class="background-glow glow-1"></div>
     <div class="background-glow glow-2"></div>
     <div class="background-glow glow-3"></div>
     <div id="particles"></div>
 
-    <!-- 1. Opening Screen / Wax Seal Envelope -->
+    <!-- 1. Opening Screen / Royal Doors Effect -->
     <div class="opening-screen" id="openingScreen">
-        <div class="ribbon-half ribbon-left">
+        <div class="door door-left" id="doorLeft">
             <div class="royal-pattern-overlay"></div>
         </div>
-        <div class="ribbon-half ribbon-right">
+        <div class="door door-right" id="doorRight">
             <div class="royal-pattern-overlay"></div>
         </div>
         
-        <div class="seal-container">
+        <!-- Wax Seal in Center -->
+        <div class="seal-container" id="sealContainer">
             <div class="luxury-seal-wrapper">
                 <div class="seal-pulse"></div>
                 <div class="seal-pulse delay-pulse"></div>
+                <div class="seal-pulse delay-pulse-2"></div>
                 <div class="luxury-seal" id="waxSeal">
                     <div class="seal-inner">
-                        <span class="seal-monogram">D&M</span>
+                        <span class="seal-monogram">D<span class="seal-heart">❤️</span>M</span>
                     </div>
                 </div>
             </div>
@@ -65,105 +67,96 @@
             <div class="corner-accent bottom-left"></div>
             <div class="corner-accent bottom-right"></div>
 
-            <!-- The Master Scratch Wrapper -->
-            <div class="scratch-container-wrapper">
+            <!-- Content Area -->
+            <div class="revealed-content-underneath">
+                <div class="top-blessing">Insha'Allah</div>
+                <div class="card-top-decoration"></div>
                 
-                <!-- The Canvas Overlay -->
-                <canvas id="scratchCanvas" class="scratch-canvas-overlay"></canvas>
-                
-                <!-- Hidden Content -->
-                <div class="revealed-content-underneath">
-                    <!-- Top Blessed Heading -->
-                    <div class="top-blessing">Insha'Allah</div>
-                    <div class="card-top-decoration"></div>
-                    
-                    <p class="invite-label">WE ARE GETTING MARRIED</p>
-                    <p class="bismillah-text">In the name of Allah, we are truly blessed to invite you to the wedding ceremony of</p>
-                    <br>
-                    <h1 class="couple-names">
-                        Danish Qureshi 
-                        <span class="ampersand">with</span> 
-                        D/o Mr. Shahzad Hashmi
-                    </h1>
+                <p class="invite-label">WE ARE GETTING MARRIED</p>
+                <p class="bismillah-text">In the name of Allah, we are truly blessed to invite you to the wedding ceremony of</p>
+                <br>
+                <h1 class="couple-names">
+                    Danish Qureshi 
+                    <span class="ampersand">with</span> 
+                    D/o Mr. Shahzad Hashmi
+                </h1>
 
-                    <div class="divider">
-                        <div class="divider-diamond"></div>
-                    </div>
-
-                    <!-- Updated Invitation Invitation & Prayer Text -->
-                    <div class="blessed-prayer-block">
-                        
-                        <p class="invitation-text">
-                            May Allah bless their union, shield their love from every evil eye, and fill their journey ahead with endless joy, deep affection, and lifelong companionship. Ameen.
-                        </p>
-                    </div>
-
-                    <!-- Events Master Group -->
-                    <div class="events-container-block">
-                        <!-- Mehndi -->
-                        <div class="event-block">
-                            <h3 class="event-title">Mehndi</h3>
-                            <div class="event-details">
-                                <div class="detail-box">
-                                    <h4>Date</h4>
-                                    <p>06 Nov, 2026</p>
-                                </div>
-                                <div class="detail-box">
-                                    <h4>Time</h4>
-                                    <p>07:00 PM</p>
-                                </div>
-                                <div class="detail-box">
-                                    <h4>Venue</h4>
-                                    <p>Al Maidah Hall Wah Cantt</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Barat -->
-                        <div class="event-block">
-                            <h3 class="event-title">Barat</h3>
-                            <div class="event-details">
-                                <div class="detail-box">
-                                    <h4>Date</h4>
-                                    <p>07 Nov, 2026</p>
-                                </div>
-                                <div class="detail-box">
-                                    <h4>Time</h4>
-                                    <p>11:00 AM</p>
-                                </div>
-                                <div class="detail-box">
-                                    <h4>Venue</h4>
-                                    <p>Home</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Walima -->
-                        <div class="event-block">
-                            <h3 class="event-title">Walima</h3>
-                            <div class="event-details">
-                                <div class="detail-box">
-                                    <h4>Date</h4>
-                                    <p>08 Nov, 2026</p>
-                                </div>
-                                <div class="detail-box">
-                                    <h4>Time</h4>
-                                    <p>03:00 PM</p>
-                                </div>
-                                <div class="detail-box">
-                                    <h4>Venue</h4>
-                                    <p>KGM Marquee Wah Cantt</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Interactive Next Button -->
-                    <div class="btn-container">
-                        <button class="continue-btn" id="continueBtn">View Countdown</button>
-                    </div>
+                <div class="divider">
+                    <div class="divider-diamond"></div>
                 </div>
 
+                <!-- Prayer Text -->
+                <div class="blessed-prayer-block">
+                    <p class="invitation-text">
+                        May Allah bless their union, shield their love from every evil eye, and fill their journey ahead with endless joy, deep affection, and lifelong companionship. Ameen.
+                    </p>
+                </div>
+
+                <!-- Events Block -->
+                <!-- Events Block -->
+<div class="events-container-block">
+    <!-- Mehndi -->
+    <div class="event-block">
+        <h3 class="event-title">Mehndi</h3>
+        <div class="event-details-grid">
+            <div class="detail-card">
+                <h4>Date</h4>
+                <p>06 Nov, 2026</p>
+            </div>
+            <div class="detail-card">
+                <h4>Time</h4>
+                <p>07:00 PM</p>
+            </div>
+            <div class="detail-card venue-card">
+                <h4>Venue</h4>
+                <p>Al Maidah Hall Wah Cantt</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barat -->
+    <div class="event-block">
+        <h3 class="event-title">Barat</h3>
+        <div class="event-details-grid">
+            <div class="detail-card">
+                <h4>Date</h4>
+                <p>07 Nov, 2026</p>
+            </div>
+            <div class="detail-card">
+                <h4>Time</h4>
+                <p>11:00 AM</p>
+            </div>
+            <div class="detail-card venue-card">
+                <h4>Venue</h4>
+                <p>Home</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Walima -->
+    <div class="event-block">
+        <h3 class="event-title">Walima</h3>
+        <div class="event-details-grid">
+            <div class="detail-card">
+                <h4>Date</h4>
+                <p>08 Nov, 2026</p>
+            </div>
+            <div class="detail-card">
+                <h4>Time</h4>
+                <p>03:00 PM</p>
+            </div>
+            <div class="detail-card venue-card">
+                <h4>Venue</h4>
+                <p>KGM Marquee Wah Cantt</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <!-- Next Button -->
+                <div class="btn-container">
+                    <button class="continue-btn" id="continueBtn">View Countdown</button>
+                </div>
             </div>
         </div>
     </div>
